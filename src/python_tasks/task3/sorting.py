@@ -10,3 +10,5 @@ def quicksort(arr):
     return quicksort(left) + [pred] + quicksort(right)
 
 
+arr = list(map(int,input("Введите элементы списка через пробел: ").split()))
+print(quicksort(arr))
