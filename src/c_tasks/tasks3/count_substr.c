@@ -3,31 +3,44 @@
 
 int main()
 {
+    // Заводим строки
+    char s[1000000];
     char s1[1000000];
-    char s2[1000000];
-    scanf("%s", s1);
-    scanf("%s", s2);
-    printf("%s\n%s", s1, s2);
-    int lens1 = strlen(s1);
-    int step = strlen(s2);
+
+    // Считываем строки
+    scanf("%[^\n]\n",s);
+    scanf("%[^\n]",s1);
+
+    // Для дальнейшей работы со строками
+    // длины их строк присваиваем переменным
+    // и создаем счетчик вхождений
+
+    int lens1 = strlen(s);
+    int step = strlen(s1);
     int count = 0;
-    printf("%s\n", s1); 
+
+
+    // Перебираем все подстроки длинной строки s1
     for (int start = 0; start + step <= lens1; ++start)
     {
-        char sub[start+step];
-        
+        char sub[start + step];
+
+        // собираем подстроку
         for (int i = 0; i < step; ++i)
-	{
-	    sub[i] = s1[start + i];
-	}	
-	sub[start+step] = '\0';
-	printf("%s\n", sub);
-	if (strcmp(s2,sub) == 0)
-		count++;
+        {
+            sub[i] = s[start + i];
+        }
+
+        sub[start + step] = '\0';
+
+        if (strcmp(s1, sub) == 0)
+            count++;
     }
 
     printf("%d\n", count);
     return 0;
 }
+
+
 
 
