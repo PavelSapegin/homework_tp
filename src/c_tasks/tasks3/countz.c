@@ -2,11 +2,16 @@
 
 int main()
 {
-    int 10;
+    int n;
     int count = 0;
-    int arr[10] = {0,1,2,3,4,0,0,1,1,2};
+
+    printf("Введите количество элементов в массиве: ");
+    scanf("%d",&n);
+    printf("Введите элементы массива через пробел:\n");
+    int arr[n];
     for (int i = 0; i < n; ++i)
     {
+	scanf("%d", &arr[i]);
         if (arr[i] == 0)
             count++;
     }
