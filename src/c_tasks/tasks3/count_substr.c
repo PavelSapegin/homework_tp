@@ -5,9 +5,9 @@
 int main()
 {
     char s1[] = "Abboja Boboja";
-    char s2[] = "Hello";
+    char s2[] = "bo";
     int lens1 = strlen(s1);
-    int step = 2;
+    int step = strlen(s2);
     int count = 0;
     printf("%s\n", s1); 
     for (int start = 0; start + step <= lens1; ++start)
@@ -18,10 +18,13 @@ int main()
 	{
 	    sub[i] = s1[start + i];
 	}	
-        sub[start+step] = '\0';
+	sub[start+step] = '\0';
 	printf("%s\n", sub);
+	if (strcmp(s2,sub) == 0)
+		count++;
     }
 
+    printf("%d\n", count);
     return 0;
 }
 
