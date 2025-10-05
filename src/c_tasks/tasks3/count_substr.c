@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
 int main()
 {
-    char s1[] = "Abboja Boboja";
-    char s2[] = "bo";
+    char s1[1000000];
+    char s2[1000000];
+    scanf("%s", s1);
+    scanf("%s", s2);
+    printf("%s\n%s", s1, s2);
     int lens1 = strlen(s1);
     int step = strlen(s2);
     int count = 0;
