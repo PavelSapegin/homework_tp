@@ -1,14 +1,5 @@
 from itertools import product
 
-n = 4
-
-
-# Массив, где индекс i - номер строки, 
-# а i-тый элемент - это номер столбца, где стоит ферзь 
-area = [i for i in range(n)] 
-
-
-
 def cheking_dia(area):
     '''
     Проверка корректности росстановки по диагонали
@@ -28,6 +19,10 @@ def cheking_dia(area):
 def queen(n):
     count = 0
     
+    # Массив, где индекс i - номер строки, 
+    # а i-тый элемент - это номер столбца, где стоит ферзь 
+    area = [i for i in range(n)] 
+
     #Перебираем все возможные расстановки и проверяем на корректность
     for x in product(area,repeat=n):
         if len(x) == len(set(x)) and cheking_dia(x):
@@ -36,4 +31,6 @@ def queen(n):
 
     return count
 
+
+n = 8
 print(queen(n))
