@@ -1,11 +1,11 @@
-
 def my_queens(n,row=0, cols=set(), dia1=set(), dia2=set()):
 
-    if row == n:
+    if row == n: # Возравщаем 1, если сомгли разместить всех
         return True
 
     count = 0
-    for col in range(n):
+    
+    for col in range(n): # перебираем все колонки
         if col not in cols \
             and (row + col) not in dia1 \
             and (row - col) not in dia2:
@@ -18,4 +18,4 @@ def my_queens(n,row=0, cols=set(), dia1=set(), dia2=set()):
     return count
 
 
-print(my_queens(13))
+print(my_queens(10))
