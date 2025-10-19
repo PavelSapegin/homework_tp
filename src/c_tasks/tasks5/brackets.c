@@ -14,21 +14,24 @@ int check_brackets(char str[])
             }
             else
             {
-                if ((str[i] == ')' && top->data != '(') || \
+                if  ((top == NULL) || \
+                    (str[i] == ')' && top->data != '(') || \
                     (str[i] == ']' && top->data != '[') || \
-                    (str[i] == '}' && top->data != '{') || \
-                     (top == NULL))
+                    (str[i] == '}' && top->data != '{'))
                     return 0;
                 else
                     top = pop(top);
             }   
 
         }
-    return 1;
+    
+    return top == NULL;
 }
 int main()
 {
-    char str[] = "{}{}()[]"; //({[]})
+    char str[255];
+    printf("Введите строку:\n");
+    scanf("%s",str);
     int res = check_brackets(str);
     printf("%d\n", res);
     return 0;
