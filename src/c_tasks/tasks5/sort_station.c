@@ -2,7 +2,7 @@
 #include <string.h>
 #include "stack.h"
 
-int equivalention(char x)
+int equivalention(char x) // Функция для сравнения операторов
 {
     switch(x)
     {
@@ -58,7 +58,7 @@ void sort_station(const char str[])
     }
         
 
-    while (top != NULL)
+    while (top != NULL) // выводим всё, что осталось в стэке
     {
         printf("%c ", top->data);
         top = pop(top); 
@@ -68,7 +68,9 @@ void sort_station(const char str[])
 
 int main()
 {
-    char str[] = "3 + 4 * 2 / (1 - 5)";
+    char str[255];
+    printf("Введите ваше выражение:\n");
+    scanf("%s", str);
     sort_station(str);
 
     return 0;
