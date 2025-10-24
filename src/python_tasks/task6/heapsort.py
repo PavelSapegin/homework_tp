@@ -1,6 +1,5 @@
-
 arr = [1,2,3,4,5,6]
-def heap(arr,n,root):
+def heap(arr,n,root): #построение кучи, где n - размер кучи, root - корень
     large = root
     left = 2*root + 1
     right = 2*root + 2
@@ -18,9 +17,10 @@ def heap(arr,n,root):
 
 def heap_sort(arr):
     
-    for root in range(len(arr),-1,-1):
+    for root in range(len(arr),-1,-1): # построение max-heap 
         heap(arr,len(arr),root)
         
+    # выносим элементы из сортировки и повторяем для оставшихся
     for i in range(len(arr)-1,-1,-1):
         arr[i],arr[0] = arr[0],arr[i]
         heap(arr,i,0)
