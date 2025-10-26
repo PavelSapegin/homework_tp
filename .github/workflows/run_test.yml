@@ -5,9 +5,9 @@ on:
     branches: 
         - main
         - p_task6_heapsort
-    paths:
-      - "src/python_tasks/task6/test_heapsort.py"
-      - "src/python_tasks/task6/sortings.py"
+    # paths:
+    #   - "src/python_tasks/task6/test_heapsort.py"
+    #   - "src/python_tasks/task6/sortings.py"
   pull_request:
     branches:
         - main
