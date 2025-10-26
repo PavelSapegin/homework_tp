@@ -29,12 +29,24 @@ void append(list **start,int new_val)
         (*start)->next = new->next;
         return;
     }
+
+    if (new->data < (*start)->data)
+    {
+       int tmp_data = (*start)->data;
+
+        (*start)->data = new->data;
+        new->data = tmp_data;
+        new->next = (*start)->next;
+        (*start)->next = new;
+        return;
+    }
+
     list *curr = *start;
-    
-    while (curr->next != NULL)
+    while (curr->next != NULL && curr->next->data < new->data)
         curr = curr->next;
     
-    curr->next = new;
+        new->next = curr->next;
+        curr->next = new;
 
 
 }
@@ -67,9 +79,10 @@ int main()
     list *st = NULL;
 
     append(&st,12);
-    append(&st,12341);
-    delete(&st,12);
-    append(&st,9821);
+    append(&st,14);
+    append(&st,13);
+    append(&st,1);
+    append(&st,10000);
     print(&st);
     return 0;
 }
