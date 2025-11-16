@@ -18,3 +18,4 @@ void spaces();
 void menu();
 
 
+int run_tests();
