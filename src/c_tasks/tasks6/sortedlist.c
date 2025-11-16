@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct list
-{
-    int data;
-    struct list *next;
-} list;
+#include "sortedlist.h"
 
 void print(list **start)
 {
@@ -48,7 +41,7 @@ void append(list **start, int new_val)
     curr->next = new;
 }
 
-void delete(list **start, int val)
+void delet(list **start, int val)
 {
     if (*start == NULL)
         return;
@@ -87,67 +80,4 @@ void menu()
     printf("1 - Добавить значение\n");
     printf("2 - Удалить значение\n");
     printf("3 - Распечатать список\n");
-}
-int main()
-{
-    list *st = NULL;
-    int choice = -10;
-
-    
-    while (1)
-    {
-
-        printf("\n");
-        menu();
-        if (scanf("%d",&choice) !=1 || choice < 0 || choice > 3)
-        {
-            spaces();
-            printf("Ошибка ввода");
-            continue;
-        }
-
-        switch(choice)
-        {
-            case 0:
-                return 0;
-            
-            case 1:
-            {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    append(&st,num);
-                    spaces();
-                    printf("Значение успешно добавлено!\n");
-                }
-                else
-                    {
-                    spaces();
-                    printf("Ошибка\n");
-                    }
-                break;
-            }
-            case 2:
-            {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    delete(&st,num);
-                    spaces();
-                    printf("Значение успешно удалено!");
-                }
-                
-                break;
-            }
-            case 3:
-            {
-                spaces();
-                print(&st);
-                break;
-            }
-        }
-    }
-    return 0;
 }
