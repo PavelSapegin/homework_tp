@@ -76,6 +76,36 @@ void test_delet_middle()
 
 
 }
+
+void test_delet_all()
+{
+    printf("Test deleting all elements from list:\n");
+
+    list *start = NULL;
+
+    append(&start,42);     
+    append(&start,42);
+
+    delet(&start,42);
+    assert (start == NULL);
+
+}
+
+void test_delet_not_existing()
+{
+    printf("Test deleing not existing element from list: \n");
+
+    list *start = NULL;
+
+    append(&start, 78);
+    append(&start,12);
+
+    delet(&start, 10);
+
+    assert (start->data == 78);
+    assert (start->next->data == 12);
+    //assert (start->next->next == NULL);
+}
 int run_tests()
 {
     printf("-----Test of Sorted list:----- \n");

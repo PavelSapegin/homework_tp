@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "sortedlist.h"
-#include "test_sortedlist.h"
 
 
 int main(int argc, char *argv[])

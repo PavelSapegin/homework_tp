@@ -17,6 +17,4 @@ void delet(list **start, int val);
 void spaces();
 void menu();
 
-
 int run_tests();
-
