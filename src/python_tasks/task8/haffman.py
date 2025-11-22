@@ -1,6 +1,14 @@
 from collections import Counter
 
+
 class TreeNode:
+    """
+    Класс узла для построения дерева\n
+    Каждый узел обязательно имеет weight - свой вес (вероятность)\n
+    Листы (символы) имеют свой символ
+
+    """
+
     def __init__(self, weight, left=None, right=None, symbol=None):
         self.symbol = symbol
         self.weight = weight
@@ -13,14 +21,19 @@ class TreeNode:
 
 string = "aaabbbccc"
 
-def char_analisys(s:str) -> dict[str, str]:
+
+def char_analisys(s: str) -> dict[str, str]:
+    """
+    Функция для частотного анализа строки\n
+    Возращает dict с вероятностями символов
+    """
     d = Counter(string)
     LEN = len(string)
     for k in d.keys():
         d[k] /= LEN
-        
-    return d 
-    
+
+    return d
+
 
 def encode(msg: str) -> tuple[str, dict[str, str]]:
     d = char_analisys(msg)
@@ -72,5 +85,20 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
     return (result_string, table)
 
 
-res = encode(string)
-print(res)
+def decode(encoded: str, table: dict[str, str]) -> str:
+    bank = ""
+    result_string = ""
+    reversed_table = dict([(v, k) for k, v in table.items()])
+    for i in range(len(encoded)):
+        bank += encoded[i]
+        if bank in reversed_table.keys():
+            result_string += reversed_table[bank]
+            bank = ""
+
+    return result_string
+
+
+res1 = encode(string)
+print(res1)
+res2 = decode(*res1)
+print(res2)
