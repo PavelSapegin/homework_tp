@@ -19,16 +19,14 @@ class TreeNode:
         return self.weight < other.weight
 
 
-string = "aaabbbccc"
-
 
 def char_analisys(s: str) -> dict[str, str]:
     """
     Функция для частотного анализа строки\n
     Возращает dict с вероятностями символов
     """
-    d = Counter(string)
-    LEN = len(string)
+    d = Counter(s)
+    LEN = len(s)
     for k in d.keys():
         d[k] /= LEN
 
@@ -98,7 +96,37 @@ def decode(encoded: str, table: dict[str, str]) -> str:
     return result_string
 
 
-res1 = encode(string)
-print(res1)
-res2 = decode(*res1)
-print(res2)
+def fileencode(filename):
+    with open(filename,"r") as f:
+        
+        s = f.read().strip()
+        res = encode(s)
+
+    with open(filename,"w") as f:
+        f.write(f"{res[0]} $$\n")
+        for k,v in res[1].items():
+            f.write(f"{k}={v}\n")
+        
+        
+        
+def filedecode(filename):
+    d = {}
+    with open(filename,"r") as f:
+        s,table = f.read().split("$$")
+        
+        for line in table.strip().split("\n"):
+            key,value = line.split("=")
+            d[key] = value
+        
+    
+    with open(filename,"w") as f:
+        decoded_s = decode(s,d)
+        f.write(decoded_s)
+        
+        
+
+
+#fileencode("file.txt")
+filedecode("file.txt")
+
+
