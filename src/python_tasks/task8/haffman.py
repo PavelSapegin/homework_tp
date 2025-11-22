@@ -1,5 +1,5 @@
 from collections import Counter
-
+import json
 
 class TreeNode:
     """
@@ -99,34 +99,36 @@ def decode(encoded: str, table: dict[str, str]) -> str:
 def fileencode(filename):
     with open(filename,"r") as f:
         
-        s = f.read().strip()
-        res = encode(s)
+        text = f.read().strip()
+        res = encode(text)
 
     with open(filename,"w") as f:
-        f.write(f"{res[0]} $$\n")
-        for k,v in res[1].items():
-            f.write(f"{k}={v}\n")
+        f.write(f"{res[0]}$$\n")
+        json.dump(res[1],f)
+    #     for k,v in res[1].items():
+    #         f.write(f"{k}={v}\n")
         
         
         
 def filedecode(filename):
-    d = {}
+    
     with open(filename,"r") as f:
-        s,table = f.read().split("$$")
+        s, table_json = f.read().split("$$")
+        table = json.loads(table_json)
         
-        for line in table.strip().split("\n"):
-            key,value = line.split("=")
-            d[key] = value
-        
+    decoded_s = decode(s,table)
     
     with open(filename,"w") as f:
-        decoded_s = decode(s,d)
         f.write(decoded_s)
+    
         
         
 
+choose = int(input())
 
-#fileencode("file.txt")
-filedecode("file.txt")
+if choose == 1:
+    fileencode("file.txt")
+else:
+    filedecode("file.txt")
 
 
