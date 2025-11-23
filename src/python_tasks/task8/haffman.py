@@ -35,12 +35,16 @@ def char_analisys(s: str) -> dict[str, str]:
 
 
 def encode(msg: str) -> tuple[str, dict[str, str]]:
+    """
+    Функция кодирования строк по алгоритму Хаффмана
+    """
     d = char_analisys(msg)
     listnode = [TreeNode(v, symbol=k) for k, v in d.items()]
     listnode.sort()
 
     if len(listnode) == 0:
-        return
+        return None
+    
     # построение дерева
     while len(listnode) > 1:
         l1 = min(listnode)
@@ -86,6 +90,9 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
 
 
 def decode(encoded: str, table: dict[str, str]) -> str:
+    """
+    Функция декдирования строки по алгоритму Хаффмана
+    """
     bank = ""
     result_string = ""
     reversed_table = dict([(v, k) for k, v in table.items()])
@@ -99,18 +106,24 @@ def decode(encoded: str, table: dict[str, str]) -> str:
 
 
 def fileencode(filename: str) -> None:
+    """
+    Функция кодирования текстового файла
+    """
     with open(filename, "r") as f:
         text = f.read().strip()
         res = encode(text)
+        if res is None:
+            return
 
     with open(filename, "w") as f:
         f.write(f"{res[0]}$$")
         json.dump(res[1], f)
-    #     for k,v in res[1].items():
-    #         f.write(f"{k}={v}\n")
 
 
 def filedecode(filename: str) -> None:
+    """
+    Функция декодирования текстового файла
+    """
     with open(filename, "r") as f:
         s, table_json = f.read().split("$$")
         table = json.loads(table_json)
@@ -122,7 +135,7 @@ def filedecode(filename: str) -> None:
 
 
 if __name__ == "__main__":
-    filename = input("Введите имя файла:")
+    filename = input("Введите путь к файлу:")
     if not os.path.isfile(filename):
         raise FileNotFoundError("Файл не найден")
 
@@ -143,7 +156,7 @@ if __name__ == "__main__":
             print(f"Файл {filename} успешно декодирован")
 
         except ValueError:
-            print("Возникла ошибка. Файл уже декодирован")
+            print("Возникла ошибка. Файл уже декодирован или пуст")
 
     else:
         raise ValueError("Некорректный ввод")
