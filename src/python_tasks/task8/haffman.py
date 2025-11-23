@@ -1,5 +1,7 @@
 from collections import Counter
 import json
+import os
+
 
 class TreeNode:
     """
@@ -17,7 +19,6 @@ class TreeNode:
 
     def __lt__(self, other):
         return self.weight < other.weight
-
 
 
 def char_analisys(s: str) -> dict[str, str]:
@@ -59,24 +60,25 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
 
     # Проверка на 1 символ
     if root.symbol is not None:
-        return [(root.symbol, "0")]
+        return (root.symbol, "0")
 
-    def get_code(root, bank):
+    def get_code(root: TreeNode, bank: str):
         node = root
         if node.symbol is not None:
             return table.append((node.symbol, bank))
 
-        return get_code(node.left, bank + "0"), get_code(node.right, bank + "1")
+        if node.left:
+            get_code(node.left, bank + "0")
+
+        if node.right:
+            get_code(node.right, bank + "1")
 
     get_code(root, bank)
 
     table = dict(table)
 
-    def transform(msg):
-        for symbol, code in table.items():
-            msg = msg.replace(symbol, code)
-
-        return msg
+    def transform(msg: str) -> str:
+        return "".join([table[c] for c in msg])
 
     result_string = transform(msg)
 
@@ -96,39 +98,52 @@ def decode(encoded: str, table: dict[str, str]) -> str:
     return result_string
 
 
-def fileencode(filename):
-    with open(filename,"r") as f:
-        
+def fileencode(filename: str) -> None:
+    with open(filename, "r") as f:
         text = f.read().strip()
         res = encode(text)
 
-    with open(filename,"w") as f:
-        f.write(f"{res[0]}$$\n")
-        json.dump(res[1],f)
+    with open(filename, "w") as f:
+        f.write(f"{res[0]}$$")
+        json.dump(res[1], f)
     #     for k,v in res[1].items():
     #         f.write(f"{k}={v}\n")
-        
-        
-        
-def filedecode(filename):
-    
-    with open(filename,"r") as f:
+
+
+def filedecode(filename: str) -> None:
+    with open(filename, "r") as f:
         s, table_json = f.read().split("$$")
         table = json.loads(table_json)
-        
-    decoded_s = decode(s,table)
-    
-    with open(filename,"w") as f:
+
+    decoded_s = decode(s, table)
+
+    with open(filename, "w") as f:
         f.write(decoded_s)
-    
-        
-        
-
-choose = int(input())
-
-if choose == 1:
-    fileencode("file.txt")
-else:
-    filedecode("file.txt")
 
 
+if __name__ == "__main__":
+    filename = input("Введите имя файла:")
+    if not os.path.isfile(filename):
+        raise FileNotFoundError("Файл не найден")
+
+    print("Выберите тип операции -")
+    choice = int(input("1 - Кодирование\n2 - Декодирование\n"))
+
+    if choice == 1:
+        try:
+            fileencode(filename)
+            print(f"Файл {filename} успешно закодирован")
+
+        except ValueError:
+            print("Возникла ошибка. Файл уже закодирован")
+
+    elif choice == 2:
+        try:
+            filedecode(filename)
+            print(f"Файл {filename} успешно декодирован")
+
+        except ValueError:
+            print("Возникла ошибка. Файл уже декодирован")
+
+    else:
+        raise ValueError("Некорректный ввод")
