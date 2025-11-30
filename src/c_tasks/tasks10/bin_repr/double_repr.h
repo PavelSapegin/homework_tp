@@ -1,4 +1,4 @@
-#pragma one
+#pragma once
 
 char* to_bin(short x);
 char* bin_sum(char *num1, char *num2);
