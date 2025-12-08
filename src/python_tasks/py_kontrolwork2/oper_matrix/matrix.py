@@ -84,3 +84,22 @@ class Matrix:
         
         return result
 
+
+    def save(self, file_name):
+        
+        no_zeros = []
+        
+        for row in range(self.rows):
+            for col in range(self.cols):
+                val = self.data[row][col]
+                
+                if val !=0:
+                    no_zeros.append((row,col,val))
+                    
+
+        with open(file_name,"w") as f:
+            f.write("%MatrixMarket matrix coordinate real general\n")
+            f.write(f"{self.rows} {self.cols} {len(no_zeros)}\n")
+            
+            for row,col,val in no_zeros:
+                f.write(f"{row + 1} {col + 1} {val}\n")
