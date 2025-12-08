@@ -33,11 +33,11 @@ class Matrix:
         if isinstance(other, Matrix):
             c = [[0 for _ in range(other.cols)] for i in range(self.rows)]
 
-            if len(self._cols) != len(other.rows):
+            if self.cols != other.rows:
                 raise ValueError("Number of columns and row are not equal")
             for i in range(self.rows):
-                for j in range(len(other.cols)):
-                    for k in range(len(self.cols)):
+                for j in range(other.cols):
+                    for k in range(self.cols):
                         c[i][j] += self.data[i][k] * other.data[k][j]
 
             result = Matrix(data=c)
@@ -57,6 +57,7 @@ class Matrix:
     def det(self):
         if self.rows != self.cols:
             raise ValueError("Determinator only for square matrix")
+        
         data = self.data
 
         def get_minor(self, data, i, j):
@@ -68,7 +69,7 @@ class Matrix:
                 return data[0][0]
 
             if rows == 2:
-                return rows[0][0] * rows[1][1] - rows[0][1] * rows[1][0]
+                return data[0][0] * data[1][1] - data[0][1] * data[1][0]
 
             det = 0
             for i in range(rows):
@@ -78,7 +79,7 @@ class Matrix:
 
             return det
 
-        result = get_det(data)
+        result = get_det(self,data)
 
         return result
 
