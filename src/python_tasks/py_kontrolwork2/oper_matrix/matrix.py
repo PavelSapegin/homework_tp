@@ -2,19 +2,19 @@ class Matrix:
     def __init__(self, data: list[list[int | float]]):
         self.data = data
 
-        self.rows = len(data)
-        self.cols = len(data[0])
+        self._rows = len(data)
+        self._cols = len(data[0])
 
     def __iter__(self):
         return self.data
 
     @property
     def rows(self):
-        return self.rows
+        return self._rows
 
     @property
     def cols(self):
-        return self.cols
+        return self._cols
 
     def __add__(self, other):
         if len(self.data) != len(other.data):
@@ -33,7 +33,7 @@ class Matrix:
         if isinstance(other, Matrix):
             c = [[0 for _ in range(other.cols)] for i in range(self.rows)]
 
-            if len(self.cols) != len(other.rows):
+            if len(self._cols) != len(other.rows):
                 raise ValueError("Number of columns and row are not equal")
             for i in range(self.rows):
                 for j in range(len(other.cols)):
