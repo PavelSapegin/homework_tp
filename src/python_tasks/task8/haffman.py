@@ -44,7 +44,7 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
 
     if len(listnode) == 0:
         return None
-    
+
     # построение дерева
     while len(listnode) > 1:
         l1 = min(listnode)
@@ -134,13 +134,53 @@ def filedecode(filename: str) -> None:
         f.write(decoded_s)
 
 
+def binencode(filename: str) -> None:
+    """
+    Функция кодирования файла в бинарном формате
+    """
+
+    with open(filename, "rb") as f:
+        text = f.read().decode() # Встроенная функция для декодирования строки
+        res = encode(text) # Реализованная функция
+        if res is None:
+            return
+
+    with open(filename, "wb") as f:
+        bin_string = res[0].encode() # Встроенная функция для кодирования строки
+        sign = "$$".encode() # Встроенная функция
+        json_table = json.dumps(res[1])
+        json_bin_table = json_table.encode() # Встроенная функция
+
+        f.write(bin_string)
+        f.write(sign)
+        f.write(json_bin_table)
+
+
+def bindecode(filename:str) -> None:
+    """
+    Функция декодирования файла в бинарном формате
+    """
+    
+    with open(filename,"rb") as f:
+        text = f.read().decode() # Встроенная функция для декодирования строки
+        s, table_json = text.split("$$")
+        table = json.loads(table_json)
+        
+    decoded_s = decode(s, table) # Реализованная функция
+    
+    with open(filename,"wb") as f:
+        decoded_s = decoded_s.encode() # Встроенная функция
+        f.write(decoded_s)
+    
+
 if __name__ == "__main__":
-    filename = input("Введите путь к файлу:")
+    filename = input("Введите путь к файлу относительно той директории, где вы находитесь:")
+
     if not os.path.isfile(filename):
         raise FileNotFoundError("Файл не найден")
 
     print("Выберите тип операции -")
-    choice = int(input("1 - Кодирование\n2 - Декодирование\n"))
+    choice = int(input("1 - Кодирование\n2 - Декодирование\n3 - Кодирование в бинарном режиме\n4 - Декодирование в бинарном режиме\n"))
 
     if choice == 1:
         try:
@@ -158,5 +198,22 @@ if __name__ == "__main__":
         except ValueError:
             print("Возникла ошибка. Файл уже декодирован или пуст")
 
+    elif choice == 3:
+        try:
+            binencode(filename)
+            print(f"{filename} успешно закодирован")
+        
+        except ValueError:
+            print("Возникла ошибка кодирования")
+            
+    elif choice == 4:
+        try:
+            bindecode(filename)
+            print(f"{filename} успешно декодирован")
+        
+        except ValueError:
+            print("Возникла ошибка декодирования")
+        
+            
     else:
         raise ValueError("Некорректный ввод")
