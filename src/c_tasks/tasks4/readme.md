@@ -1,14 +1,20 @@
 # Инструкция по сборке
 
 ### Компиляция
+
 ```bash
-gcc -S bubble_sort.c -O2
-gcc bubble_sort.s -o bubble_sort
+mkdir build
+cd build
+cmake ..
+make
+```
+Для генерации ассемблерного кода пропишите
+```bash
+make bubble_sort.s
 ```
 
 ### Запуск
+
 ```bash
 ./bubble_sort
-echo $?
 ```
-
