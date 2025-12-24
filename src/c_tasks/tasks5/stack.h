@@ -1,7 +1,4 @@
-#ifndef STACK_H
-#define STACK_H
-
-
+#pragma once
 
 typedef struct stack_obj
 {
@@ -15,4 +12,3 @@ stack_obj* pop(stack_obj *top);
 void show_stack(stack_obj *top);
 
 
-#endif
