@@ -2,23 +2,34 @@
 #include "stack.h"
 #include <string.h>
 
+void free_stack(stack_obj *top)
+{
+    while (top != NULL)
+        top = pop(top);
+    
+}
+
 int check_brackets(char str[])
 {
     stack_obj *top = NULL;
-
-        for (int i = 0; i < strlen(str); ++i)
+    int len = strlen(str);
+        for (int i = 0; i < len; ++i)
         {
             if (str[i] == '(' || str[i] == '{' || str[i] == '[')
             {
                 top = push(top, str[i]);
             }
-            else
+            else if (str[i] == ')' || str[i] == '}' || str[i] == ']')
             {
-                if  ((top == NULL) || \
+                if  ((top == NULL) || 
                     (str[i] == ')' && top->data != '(') || \
                     (str[i] == ']' && top->data != '[') || \
                     (str[i] == '}' && top->data != '{'))
+                {
+                    free_stack(top);
                     return 0;
+                }
+                    
                 else
                     top = pop(top);
             }   
