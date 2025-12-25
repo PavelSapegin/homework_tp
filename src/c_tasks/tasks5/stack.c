@@ -2,11 +2,6 @@
 #include <stdio.h>
 #include "stack.h"
 
-typedef struct stack_obj
-{
-    int data;
-    struct stack_obj *next;
-} stack_obj;
 
 stack_obj* push(stack_obj *top, int value)
 {
