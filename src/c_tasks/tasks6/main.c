@@ -11,62 +11,57 @@ int main(int argc, char *argv[])
     list *st = NULL;
     int choice = -10;
 
-    
     while (1)
     {
 
         printf("\n");
         menu();
-        if (scanf("%d",&choice) !=1 || choice < 0 || choice > 3)
+        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3)
         {
-            spaces();
-            printf("Ошибка ввода");
+            while (getchar() != '\n');
+            printf("Ошибка ввода\n");
             continue;
         }
 
-        switch(choice)
+        switch (choice)
         {
-            case 0:
-                return 0;
-            
-            case 1:
+        case 0:
+            free_list(&st);
+            return 0;
+
+        case 1:
+        {
+            int num;
+            printf("Введите значение:\n");
+            if (scanf("%d", &num) == 1)
             {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    append(&st,num);
-                    spaces();
-                    printf("Значение успешно добавлено!\n");
-                }
-                else
-                    {
-                    spaces();
-                    printf("Ошибка\n");
-                    }
-                break;
+                append(&st, num);
+                printf("Значение успешно добавлено!\n");
             }
-            case 2:
+            else
             {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    delet(&st,num);
-                    spaces();
-                    printf("Значение успешно удалено!");
-                }
-                
-                break;
+                printf("Ошибка\n");
             }
-            case 3:
+            break;
+        }
+        case 2:
+        {
+            int num;
+            printf("Введите значение:\n");
+            if (scanf("%d", &num) == 1)
             {
-                spaces();
-                print(&st);
-                break;
+                delete(&st, num);
+                printf("Значение успешно удалено!\n");
             }
+
+            break;
+        }
+        case 3:
+        {
+            print(&st);
+            break;
+        }
         }
     }
     return 0;
 }
-

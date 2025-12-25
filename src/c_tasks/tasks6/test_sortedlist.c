@@ -1,20 +1,23 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 #include "sortedlist.h"
 
 void test_append_simple()
 {
-    printf("Test simple append: \n");
+    printf("Test simple append: ");
     list *start = NULL;
     append(&start,2);
 
     assert (start->data == 2);
     assert (start->next == NULL);
+    free_list(&start);
+    printf("OK\n");
 }
 
 void test_append_multiply()
 {
-    printf("Test multipling append: \n");
+    printf("Test multipling append: ");
 
     list *start = NULL;
 
@@ -24,42 +27,48 @@ void test_append_multiply()
     for (int i = 0; i < 4; ++i)
         append(&start,added[i]);
     
+    list *curr = start;
     for (int i = 0; i < 4; ++i)
     {
-        assert (start->data == sorted_added[i]);
-        start = start->next;
+        assert (curr->data == sorted_added[i]);
+        curr = curr->next;
     }
 
-    assert (start == NULL); 
+    assert (curr == NULL); 
+    free_list(&start);
+    printf("OK\n");
 }
 
-void test_delet_empty()
+void test_delete_empty()
 {
-    printf("Test deleting elements from empty list: \n");
+    printf("Test deleting elements from empty list: ");
 
     list *start = NULL;
 
-    delet(&start, 42);
+    delete(&start, 42);
     assert(start == NULL);
+    printf("OK\n");
 }
 
-void test_delet()
+void test_delete()
 {
-    printf("Test simple deleting element from list: \n");
+    printf("Test simple deleting element from list: ");
 
     list *start = NULL;
 
     append(&start, 43);
     append(&start, 56);
-    delet(&start, 43);
+    delete(&start, 43);
 
     assert(start->data == 56);
     assert(start->next == NULL);
+    free_list(&start);
+    printf("OK\n");
 }
 
-void test_delet_middle()
+void test_delete_middle()
 {
-    printf("Test deleting elements from middle of list: \n");
+    printf("Test deleting elements from middle of list: ");
 
     list *start = NULL;
 
@@ -69,52 +78,58 @@ void test_delet_middle()
     append(&start, 90);
     append(&start, 1);
 
-    delet(&start, 90);
+    delete(&start, 90);
 
     assert(start->data == 1);
     assert(start->next->data == 89);
-
+    free_list(&start);
+    printf("OK\n");
 
 }
 
-void test_delet_all()
+void test_delete_all()
 {
-    printf("Test deleting all elements from list:\n");
+    printf("Test deleting all elements from list: ");
 
     list *start = NULL;
 
     append(&start,42);     
     append(&start,42);
 
-    delet(&start,42);
+    delete(&start,42);
     assert (start == NULL);
-
+    free_list(&start);
+    printf("OK\n");
 }
 
-void test_delet_not_existing()
+void test_delete_not_existing()
 {
-    printf("Test deleing not existing element from list: \n");
+    printf("Test deleting not existing element from list: ");
 
     list *start = NULL;
 
     append(&start, 78);
     append(&start,12);
 
-    delet(&start, 10);
+    delete(&start, 10);
 
-    assert (start->data == 78);
-    assert (start->next->data == 12);
-    //assert (start->next->next == NULL);
+    assert (start->data == 12);
+    assert (start->next->data == 78);
+    free_list(&start);
+    printf("OK\n");
+
 }
 int run_tests()
 {
     printf("-----Test of Sorted list:----- \n");
     test_append_simple();
     test_append_multiply();
-    test_delet_empty();
-    test_delet();
-    test_delet_middle();
-    printf("Tests sucseed!\n");
+    test_delete_empty();
+    test_delete();
+    test_delete_middle();
+    test_delete_all();
+    test_delete_not_existing();
+    printf("Tests succeed!\n");
     return 0;
 }
 

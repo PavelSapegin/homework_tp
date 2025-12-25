@@ -2,7 +2,13 @@
 
 void print(list **start)
 {
+    if (*start == NULL)
+    {
+        printf("Список пуст\n");
+        return;
+    }
     list *curr = *start;
+    printf("\n");
     while (curr != NULL)
     {
         printf("%d\n", curr->data);
@@ -22,14 +28,11 @@ void append(list **start, int new_val)
         return;
     }
 
+    // добавление элемента в голову списка
     if (new->data < (*start)->data)
     {
-        int tmp_data = (*start)->data;
-
-        (*start)->data = new->data;
-        new->data = tmp_data;
-        new->next = (*start)->next;
-        (*start)->next = new;
+        new->next = *start;
+        *start = new;
         return;
     }
 
@@ -41,18 +44,21 @@ void append(list **start, int new_val)
     curr->next = new;
 }
 
-void delet(list **start, int val)
+void delete(list **start, int val)
 {
-    if (*start == NULL)
-        return;
 
-    while ((*start)->next != NULL && (*start)->data == val)
+    // удаляем элементы из головы
+    while (*start != NULL && (*start)->data == val)
     {
         list *del = *start;
         *start = (*start)->next;
         free(del);
     }
 
+    if (*start == NULL)
+        return;
+
+    // удаляем элементы из тела списка
     list *curr = *start;
     while (curr->next != NULL)
     {
@@ -67,12 +73,6 @@ void delet(list **start, int val)
     }
 }
 
-void spaces()
-{
-    for (int i = 0; i < 1000; ++i)
-        printf("             \n");
-}
-
 void menu()
 {
     printf("Привет, выберите пункт для работы в отсортированном списке\n");
@@ -82,3 +82,15 @@ void menu()
     printf("3 - Распечатать список\n");
 }
 
+void free_list(list **start)
+{
+    list *curr = *start;
+    while (curr != NULL)
+    {
+        list *next = curr->next;
+        free(curr);
+        curr = next;
+    }
+
+    *start = NULL;
+}

@@ -13,8 +13,8 @@ typedef struct list
 
 void print(list ** start);
 void append(list **start, int new_val);
-void delet(list **start, int val);
-void spaces();
+void delete(list **start, int val);
 void menu();
+void free_list(list **start);
 
 int run_tests();
