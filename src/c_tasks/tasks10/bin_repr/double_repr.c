@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum {BIN_SIZE = 17};
+
 char *to_bin(short x)
 {
-    char *str = malloc(sizeof(char) * 17);
+    char *str = malloc(sizeof(char) * BIN_SIZE);
 
     int bit = 0b1000000000000000;
     for (int i = 0; i < 16; ++i)
@@ -11,7 +13,7 @@ char *to_bin(short x)
         str[i] = (x & bit) ? '1' : '0';
         bit >>= 1;
     }
-    str[17] = '\0';
+    str[16] = '\0';
     return str;
 }
 
@@ -58,7 +60,7 @@ char *bin_sum(char *num1, char *num2)
             }
         }
     }
-    res[18] = '\0';
+    res[16] = '\0';
     return res;
 }
 
@@ -70,5 +72,5 @@ short bin_to_dec(char *str)
         res = res * 2 + ((str[i] == '1') ? 1 : 0);
     }
 
-    return (str[0] == '1') ? res - 65536 : res;
+    return (short)res;
 }

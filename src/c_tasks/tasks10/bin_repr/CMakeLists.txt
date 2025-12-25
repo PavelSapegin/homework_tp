@@ -12,6 +12,6 @@ target_include_directories(tests PUBLIC ${BIN_REPR_DIR})
 add_executable(main main.c)
 target_link_libraries(main PRIVATE double_repr)
 target_link_libraries(main PRIVATE tests)
-
+target_compile_options(main PUBLIC -Wall -Wextra)
 
 
