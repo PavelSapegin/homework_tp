@@ -9,7 +9,13 @@ typedef struct list
 
 void print(list **start)
 {
+    if (*start == NULL)
+    {
+        printf("Список пуст\n");
+        return;
+    }
     list *curr = *start;
+    printf("\n");
     while (curr != NULL)
     {
         printf("%d\n", curr->data);
@@ -29,14 +35,11 @@ void append(list **start, int new_val)
         return;
     }
 
+    // добавление элемента в голову списка
     if (new->data < (*start)->data)
     {
-        int tmp_data = (*start)->data;
-
-        (*start)->data = new->data;
-        new->data = tmp_data;
-        new->next = (*start)->next;
-        (*start)->next = new;
+        new->next = *start;
+        *start = new;
         return;
     }
 
@@ -50,16 +53,19 @@ void append(list **start, int new_val)
 
 void delete(list **start, int val)
 {
-    if (*start == NULL)
-        return;
 
-    while ((*start)->next != NULL && (*start)->data == val)
+    // удаляем элементы из головы
+    while (*start != NULL && (*start)->data == val)
     {
         list *del = *start;
         *start = (*start)->next;
         free(del);
     }
 
+    if (*start == NULL)
+        return;
+
+    // удаляем элементы из тела списка
     list *curr = *start;
     while (curr->next != NULL)
     {
@@ -74,12 +80,6 @@ void delete(list **start, int val)
     }
 }
 
-void spaces()
-{
-    for (int i = 0; i < 1000; ++i)
-        printf("             \n");
-}
-
 void menu()
 {
     printf("Привет, выберите пункт для работы в отсортированном списке\n");
@@ -88,65 +88,74 @@ void menu()
     printf("2 - Удалить значение\n");
     printf("3 - Распечатать список\n");
 }
+
+void free_list(list **start)
+{
+    list *curr = *start;
+    while (curr != NULL)
+    {
+        list *next = curr->next;
+        free(curr);
+        curr = next;
+    }
+
+    *start = NULL;
+}
 int main()
 {
     list *st = NULL;
     int choice = -10;
 
-    
     while (1)
     {
 
         printf("\n");
         menu();
-        if (scanf("%d",&choice) !=1 || choice < 0 || choice > 3)
+        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3)
         {
-            spaces();
-            printf("Ошибка ввода");
+            while (getchar() != '\n');
+            printf("Ошибка ввода\n");
             continue;
         }
 
-        switch(choice)
+        switch (choice)
         {
-            case 0:
-                return 0;
-            
-            case 1:
+        case 0:
+            free_list(&st);
+            return 0;
+
+        case 1:
+        {
+            int num;
+            printf("Введите значение:\n");
+            if (scanf("%d", &num) == 1)
             {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    append(&st,num);
-                    spaces();
-                    printf("Значение успешно добавлено!\n");
-                }
-                else
-                    {
-                    spaces();
-                    printf("Ошибка\n");
-                    }
-                break;
+                append(&st, num);
+                printf("Значение успешно добавлено!\n");
             }
-            case 2:
+            else
             {
-                int num;
-                printf("Введите значение:\n");
-                if (scanf("%d",&num) == 1)
-                {
-                    delete(&st,num);
-                    spaces();
-                    printf("Значение успешно удалено!");
-                }
-                
-                break;
+                printf("Ошибка\n");
             }
-            case 3:
+            break;
+        }
+        case 2:
+        {
+            int num;
+            printf("Введите значение:\n");
+            if (scanf("%d", &num) == 1)
             {
-                spaces();
-                print(&st);
-                break;
+                delete(&st, num);
+                printf("Значение успешно удалено!\n");
             }
+
+            break;
+        }
+        case 3:
+        {
+            print(&st);
+            break;
+        }
         }
     }
     return 0;
