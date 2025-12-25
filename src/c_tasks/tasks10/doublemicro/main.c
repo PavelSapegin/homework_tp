@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
 
     ParsedDouble result = convert(num1);
-    printf("Result: %c%.17g * 2^%d\n", result.sign, result.man, result.exp);
+    printf("Result: %c%.17g*2^%d\n", result.sign, result.man, result.exp);
     return 0;
 }
 

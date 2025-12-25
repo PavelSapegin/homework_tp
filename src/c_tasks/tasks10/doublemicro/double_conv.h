@@ -15,6 +15,6 @@ typedef struct ParsedDouble
 
 void run_tests();
 
-int get_exp(char bits[]);
-double get_man(char bits[]);
+int get_exp(Number num);
+double get_man(Number num);
 ParsedDouble convert(Number num);

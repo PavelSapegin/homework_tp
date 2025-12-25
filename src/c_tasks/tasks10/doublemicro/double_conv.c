@@ -1,31 +1,28 @@
 #include <stdio.h>
 #include "double_conv.h"
 
+enum {bias = 1023,hidden_bit=1};
 
-int get_exp(char bits[])
+int get_exp(Number num)
 {
-    int res = 0;
-    for (int i = 1; i < 12; ++i)
-    {
-        res = res * 2 + bits[i];
-    }
-
-    return res - 1023;
+    int res = (int)(((num.conv) >> 52) & 0x7FFULL); // 7FF - 11 единиц
+    return res - bias;
 }
 
-double get_man(char bits[])
+double get_man(Number num)
 {
+    unsigned long long bin_man = num.conv & 0xFFFFFFFFFFFFFULL; // 52 единицы
     double res = 0.0;
     double curr = 0.5;
 
-    for (int i = 12; i < 64; ++i)
+    for (int i = 51; i>=0; --i)
     {
-        if (bits[i] == 1)
+        if ((bin_man >> i) & 1)
             res += curr;
         curr /= 2.;
     }
 
-    return res + 1.0;
+    return res + hidden_bit;
 }
 ParsedDouble convert(Number num)
 {
@@ -40,15 +37,9 @@ ParsedDouble convert(Number num)
         return res;
     }
     
-    char bits[64];
-    for (int i = 0; i < 64; ++i)
-    {
-        bits[i] = (num.conv >> (63 - i) & 1);
-    }
-
-    res.sign = (bits[0] == 1) ? '-' : '+';
-    res.exp = get_exp(bits);
-    res.man = get_man(bits);
+    res.sign = ((num.conv >> 63) & 1) ? '-' : '+';
+    res.exp = get_exp(num);
+    res.man = get_man(num);
     
     return res;
 }
