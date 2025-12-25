@@ -23,7 +23,6 @@ stack_obj* pop(stack_obj *top)
         return NULL;
     
     stack_obj *new_top = top->next;
-    new_top->data = top->next->data;
     
     return new_top;
 }
