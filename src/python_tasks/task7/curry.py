@@ -9,7 +9,7 @@ def curry(func, n):
         if len(accum_args) == n:  # Вызываем функцию, когда набрали нужное число аргументов
             try:
                 return func(*accum_args)
-            except:
+            except ValueError:
                 raise ValueError("Заданная арность n не соответствует фактической арности функции")
         
         return lambda x: inner(accum_args + (x,))  # Набираем аргументы
