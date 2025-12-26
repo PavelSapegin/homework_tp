@@ -43,7 +43,13 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
     listnode.sort()
 
     if len(listnode) == 0:
-        return None
+        return ("",{})
+    
+    if len(listnode) == 1:
+        symbol = listnode[0].symbol
+        table = {symbol: "0"}
+        result_string = "0" * len(msg)
+        return (result_string, table)
 
     # построение дерева
     while len(listnode) > 1:
@@ -62,9 +68,6 @@ def encode(msg: str) -> tuple[str, dict[str, str]]:
     table = []
     bank = ""
 
-    # Проверка на 1 символ
-    if root.symbol is not None:
-        return (root.symbol, "0")
 
     def get_code(root: TreeNode, bank: str):
         node = root
@@ -110,7 +113,7 @@ def fileencode(filename: str) -> None:
     Функция кодирования текстового файла
     """
     with open(filename, "r") as f:
-        text = f.read().strip()
+        text = f.read() 
         res = encode(text)
         if res is None:
             return
