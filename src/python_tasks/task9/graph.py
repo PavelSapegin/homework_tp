@@ -11,44 +11,46 @@ class Node:
 class Graph:
     '''
     Класс графа\n
-    Содержит список всех узлов listnode и корень root\n
+    Содержит список всех узлов listnode\n
     как элемент listnode с индексом 0\n
     Метод dfs() проходит граф в глубину и \n
-    возвращает список number посещенных вершин\n
+    возвращает список  посещенных вершин\n
     Граф реализован как итерируемый объект
     '''
     def __init__(self, listnode: list[Node]):
         self.listnode = listnode
-        self.root = listnode[0]
+        
 
     def dfs(self) -> list[Node]:
 
         '''
         Метод dfs() проходит граф в глубину и возращает список посещенных вершин (объекты Node)
         '''
-        root = self.listnode[0]
-
-        result = []
-        visited = set()
-
-        def recsearch(root: Node) -> None:
-            visited.add(root)
-            result.append(root)
-            for child in root.children:
-                if child not in visited:
-                    recsearch(child)
-
-            
-
-        recsearch(root)
-        return result
+        
+        return list(self)
 
     def __iter__(self):
         '''
         Граф итерируется в порядке DFS, возращая объекты Node
         '''
-        for node in self.dfs():
-            yield node
+        
+        if not self.listnode:
+            return
+        
+        visited = set()
+        stack = [self.listnode[0]]
+        
+        while stack:
+            node = stack.pop()
+            
+            if node not in visited:
+                visited.add(node)
+                yield node
+                
+            
+            for child in reversed(node.children):
+                if child not in visited:
+                    stack.append(child)
 
 
 
