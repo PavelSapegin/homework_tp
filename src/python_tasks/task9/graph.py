@@ -52,19 +52,17 @@ class Graph:
                 if child not in visited:
                     stack.append(child)
 
+if __name__ == "__main__":
+    node1 = Node(number=1)
+    node2 = Node(number=2)
+    node3 = Node(number=3, children=[node2])
+    node4 = Node(number=4, children=[node1, node2, node3])
+    node5 = Node(number=5)
+    node1.children = [node5]
 
+    gr = Graph([node4, node3, node2, node1])
+    dfs_nodes = gr.dfs()
+    print([node.number for node in dfs_nodes])
 
-
-node1 = Node(number=1)
-node2 = Node(number=2)
-node3 = Node(number=3, children=[node2])
-node4 = Node(number=4, children=[node1, node2, node3])
-node5 = Node(number=5)
-node1.children = [node5]
-
-gr = Graph([node4, node3, node2, node1])
-dfs_nodes = gr.dfs()
-print([node.number for node in dfs_nodes])
-
-for node in gr:
-    print(node.number)
+    for node in gr:
+        print(node.number)
