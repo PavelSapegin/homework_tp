@@ -11,4 +11,3 @@ stack_obj* push(stack_obj *top, int value);
 stack_obj* pop(stack_obj *top);
 void show_stack(stack_obj *top);
 
-
