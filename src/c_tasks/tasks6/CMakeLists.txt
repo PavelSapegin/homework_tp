@@ -1,5 +1,15 @@
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13)
+project(task_6 C)
 
-project(sorted_list C)
+option(counter "compile counter" OFF)
+set(SOURCES)
 
-add_executable(sorted_list sortedlist.c)
+if(counter)
+    message(STATUS "compile counter")
+    list(APPEND SOURCES brackets.c)
+else()
+    message(STATUS "compile sortedlist")
+    list(APPEND SOURCES sortedlist.c)
+endif()
+
+add_executable(app ${SOURCES})
