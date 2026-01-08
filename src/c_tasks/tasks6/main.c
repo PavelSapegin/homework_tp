@@ -1,63 +1,53 @@
+#include "sortedlist.h"
 #include <stdio.h>
 #include <string.h>
-#include "sortedlist.h"
 
-
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc > 1 && strcmp(argv[1], "--test") == 0)
         return run_tests();
 
-    list *st = NULL;
+    list* st = NULL;
     int choice = -10;
 
-    while (1)
-    {
+    while (1) {
 
         printf("\n");
         menu();
-        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3)
-        {
-            while (getchar() != '\n');
+        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3) {
+            while (getchar() != '\n')
+                ;
             printf("Ошибка ввода\n");
             continue;
         }
 
-        switch (choice)
-        {
+        switch (choice) {
         case 0:
             free_list(&st);
             return 0;
 
-        case 1:
-        {
+        case 1: {
             int num;
             printf("Введите значение:\n");
-            if (scanf("%d", &num) == 1)
-            {
+            if (scanf("%d", &num) == 1) {
                 append(&st, num);
                 printf("Значение успешно добавлено!\n");
-            }
-            else
-            {
+            } else {
                 printf("Ошибка\n");
             }
             break;
         }
-        case 2:
-        {
+        case 2: {
             int num;
             printf("Введите значение:\n");
-            if (scanf("%d", &num) == 1)
-            {
-                delete(&st, num);
+            if (scanf("%d", &num) == 1) {
+                delete (&st, num);
                 printf("Значение успешно удалено!\n");
             }
 
             break;
         }
-        case 3:
-        {
+        case 3: {
             print(&st);
             break;
         }

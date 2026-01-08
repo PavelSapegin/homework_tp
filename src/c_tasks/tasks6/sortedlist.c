@@ -1,42 +1,38 @@
 #include "sortedlist.h"
 
-void print(list **start)
+void print(list** start)
 {
-    if (*start == NULL)
-    {
+    if (*start == NULL) {
         printf("Список пуст\n");
         return;
     }
-    list *curr = *start;
+    list* curr = *start;
     printf("\n");
-    while (curr != NULL)
-    {
+    while (curr != NULL) {
         printf("%d\n", curr->data);
         curr = curr->next;
     }
 }
 
-void append(list **start, int new_val)
+void append(list** start, int new_val)
 {
-    list *new = malloc(sizeof(list));
+    list* new = malloc(sizeof(list));
     new->data = new_val;
     new->next = NULL;
 
-    if (*start == NULL)
-    {
+    if (*start == NULL) {
         *start = new;
         return;
     }
 
     // добавление элемента в голову списка
-    if (new->data < (*start)->data)
-    {
+    if (new->data < (*start)->data) {
         new->next = *start;
         *start = new;
         return;
     }
 
-    list *curr = *start;
+    list* curr = *start;
     while (curr->next != NULL && curr->next->data < new->data)
         curr = curr->next;
 
@@ -44,13 +40,12 @@ void append(list **start, int new_val)
     curr->next = new;
 }
 
-void delete(list **start, int val)
+void delete(list** start, int val)
 {
 
     // удаляем элементы из головы
-    while (*start != NULL && (*start)->data == val)
-    {
-        list *del = *start;
+    while (*start != NULL && (*start)->data == val) {
+        list* del = *start;
         *start = (*start)->next;
         free(del);
     }
@@ -59,16 +54,13 @@ void delete(list **start, int val)
         return;
 
     // удаляем элементы из тела списка
-    list *curr = *start;
-    while (curr->next != NULL)
-    {
-        if (curr->next->data == val)
-        {
-            list *del = curr->next;
+    list* curr = *start;
+    while (curr->next != NULL) {
+        if (curr->next->data == val) {
+            list* del = curr->next;
             curr->next = curr->next->next;
             free(del);
-        }
-        else
+        } else
             curr = curr->next;
     }
 }
@@ -82,12 +74,11 @@ void menu()
     printf("3 - Распечатать список\n");
 }
 
-void free_list(list **start)
+void free_list(list** start)
 {
-    list *curr = *start;
-    while (curr != NULL)
-    {
-        list *next = curr->next;
+    list* curr = *start;
+    while (curr != NULL) {
+        list* next = curr->next;
         free(curr);
         curr = next;
     }
@@ -96,56 +87,47 @@ void free_list(list **start)
 }
 int main()
 {
-    list *st = NULL;
+    list* st = NULL;
     int choice = -10;
 
-    while (1)
-    {
+    while (1) {
 
         printf("\n");
         menu();
-        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3)
-        {
-            while (getchar() != '\n');
+        if (scanf("%d", &choice) != 1 || choice < 0 || choice > 3) {
+            while (getchar() != '\n')
+                ;
             printf("Ошибка ввода\n");
             continue;
         }
 
-        switch (choice)
-        {
+        switch (choice) {
         case 0:
             free_list(&st);
             return 0;
 
-        case 1:
-        {
+        case 1: {
             int num;
             printf("Введите значение:\n");
-            if (scanf("%d", &num) == 1)
-            {
+            if (scanf("%d", &num) == 1) {
                 append(&st, num);
                 printf("Значение успешно добавлено!\n");
-            }
-            else
-            {
+            } else {
                 printf("Ошибка\n");
             }
             break;
         }
-        case 2:
-        {
+        case 2: {
             int num;
             printf("Введите значение:\n");
-            if (scanf("%d", &num) == 1)
-            {
-                delete(&st, num);
+            if (scanf("%d", &num) == 1) {
+                delete (&st, num);
                 printf("Значение успешно удалено!\n");
             }
 
             break;
         }
-        case 3:
-        {
+        case 3: {
             print(&st);
             break;
         }
