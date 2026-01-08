@@ -1,6 +1,5 @@
 #pragma once
 
-
 typedef struct stack_obj
 {
     int data;
