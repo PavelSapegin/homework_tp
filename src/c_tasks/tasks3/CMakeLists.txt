@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
-project(count_substring C)
+project(task_3 C)
+option(brack "compile brackets" OFF)
 
-add_executable(count_substr.c count_substr.c)
+if(brack)
+  message(STATUS "compile brack")
+  add_executable(brack brack.c)
+else()
+  message(STATUS "compile counter zeros")
+  add_executable(countz countz.c)
+endif()
