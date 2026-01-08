@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "stack.h"
 
-int equivalention(char x) // Функция для сравнения операторов
+int priority(char x) // Функция для сравнения операторов
 {
     switch(x)
     {
@@ -19,22 +20,27 @@ int equivalention(char x) // Функция для сравнения опера
     }
 }
 
+
+
 void sort_station(const char str[])
 {
-    char nums[10] = "0123456789";
-    char opers[4] = "+-*/";
+    char opers[] = "+-*/";
+    int n = strlen(str);
     stack_obj *top = NULL;
 
-    for (int i = 0; i < strlen(str); ++i)
+    for (int i = 0; i < n; ++i)
     {
-        if (str[i] != ' ')
-        {
-            if (strchr(nums,str[i]) != NULL)
-                printf("%c ", str[i]);
-        
+        if (!isspace(str[i]))
+        {   
+            if (isdigit(str[i])){
+                while (i < n && isdigit(str[i]))
+                    printf("%c",str[i++]);
+                printf(" ");
+                i--;
+            }
             else if (strchr(opers,str[i]) != NULL)
             {
-                while (top != NULL &&equivalention(str[i]) <= equivalention(top->data)) // Тут ошибка с равными операциями
+                while (top != NULL && priority(str[i]) <= priority(top->data)) 
                 {
                     printf("%c ",top->data);
                     top = pop(top);
@@ -47,20 +53,22 @@ void sort_station(const char str[])
             
             else if (str[i] == ')')
             {
-                while (top->data != '(')
+                while (top != NULL && top->data != '(')
                 {   
                     printf("%c ",top->data); 
                     top = pop(top);
                 }
-                top = pop(top);
+                if (top != NULL && top->data == '(')
+                    top = pop(top);
             }   
-        }   
+        }
     }
         
 
     while (top != NULL) // выводим всё, что осталось в стэке
     {
-        printf("%c ", top->data);
+        if (top-> data != '(')
+            printf("%c ", top->data);
         top = pop(top); 
     }
     printf("\n");
@@ -70,7 +78,7 @@ int main()
 {
     char str[255];
     printf("Введите ваше выражение:\n");
-    scanf("%s", str);
+    fgets(str,sizeof(str),stdin);
     sort_station(str);
 
     return 0;
