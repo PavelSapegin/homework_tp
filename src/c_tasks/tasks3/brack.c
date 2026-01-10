@@ -16,8 +16,7 @@ int main()
     // Если count != 0, то либо открывающихся,
     // либо закрывающихся скобок больше
 
-    for (int i = 0; i < len; ++i)
-    {
+    for (int i = 0; i < len; ++i) {
 
         if (str[i] == '(')
             count += 1;
@@ -25,8 +24,7 @@ int main()
         else if (str[i] == ')')
             count -= 1;
 
-        if (count < 0)
-        {
+        if (count < 0) {
             printf("False");
             return 0;
         }
@@ -40,9 +38,3 @@ int main()
 
     return 0;
 }
-
-
-
-
-
-
