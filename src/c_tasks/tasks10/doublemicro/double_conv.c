@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include "double_conv.h"
+#include <stdio.h>
 
-enum {bias = 1023,hidden_bit=1};
+enum { bias = 1023,
+    hidden_bit = 1 };
 
 int get_exp(Number num)
 {
@@ -15,8 +16,7 @@ double get_man(Number num)
     double res = 0.0;
     double curr = 0.5;
 
-    for (int i = 51; i>=0; --i)
-    {
+    for (int i = 51; i >= 0; --i) {
         if ((bin_man >> i) & 1)
             res += curr;
         curr /= 2.;
@@ -27,19 +27,18 @@ double get_man(Number num)
 ParsedDouble convert(Number num)
 {
     ParsedDouble res;
-    
-    if (num.val == 0.0)
-    {
+
+    if (num.val == 0.0) {
         res.sign = '+';
         res.exp = 0;
         res.man = 0.0;
-        
+
         return res;
     }
-    
+
     res.sign = ((num.conv >> 63) & 1) ? '-' : '+';
     res.exp = get_exp(num);
     res.man = get_man(num);
-    
+
     return res;
 }
