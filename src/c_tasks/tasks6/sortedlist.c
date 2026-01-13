@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct list {
-    int data;
-    struct list* next;
-} list;
+#include "sortedlist.h"
 
 void print(list** start)
 {
@@ -139,5 +133,6 @@ int main()
         }
         }
     }
-    return 0;
+
+    *start = NULL;
 }
