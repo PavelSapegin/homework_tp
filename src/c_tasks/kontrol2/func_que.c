@@ -1,37 +1,34 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Структура списков f и r
-typedef struct list
-{
+typedef struct list {
     int val;
-    struct list *next;
+    struct list* next;
 } list;
 
 // Структура очереди
-typedef struct queue
-{
-    list *f;
-    list *r;
+typedef struct queue {
+    list* f;
+    list* r;
 } queue;
 
 // Добавление в начала списка
-list *add(int val, list *start)
+list* add(int val, list* start)
 {
-    list *new = malloc(sizeof(list));
+    list* new = malloc(sizeof(list));
     new->val = val;
     new->next = start;
     return new;
 }
 
 // Реверс списка
-list *reverse(list *start)
+list* reverse(list* start)
 {
-    list *new = NULL;
+    list* new = NULL;
 
-    while (start != NULL)
-    {
+    while (start != NULL) {
         new = add(start->val, new);
         start = start->next;
     }
@@ -40,31 +37,29 @@ list *reverse(list *start)
 }
 
 // Перенаправление r в f, если f пустой
-queue redirect(list *f, list *r)
+queue redirect(list* f, list* r)
 {
-    if (f == NULL)
-    {
+    if (f == NULL) {
         f = reverse(r);
         r = NULL;
     }
 
-    return (queue){f, r};
+    return (queue) { f, r };
 }
 
 // Добавление в очередь
 queue enqueue(queue q, int x)
 {
-    list *temp = add(x, q.r);
+    list* temp = add(x, q.r);
     return redirect(q.f, temp);
 }
 
 // Удаление из очереди
-queue dequeue(queue q, int *out_val)
+queue dequeue(queue q, int* out_val)
 {
-    if (q.f == NULL)
-    {
+    if (q.f == NULL) {
         printf("Error. Queue is empty\n");
-        return (queue){NULL, NULL};
+        return (queue) { NULL, NULL };
     }
 
     *out_val = q.f->val;
@@ -75,7 +70,7 @@ int main()
 {
 
     printf("TEST FIFO:...\n");
-    queue q_test1 = {NULL, NULL};
+    queue q_test1 = { NULL, NULL };
     int x_test1;
 
     q_test1 = enqueue(q_test1, 1);
@@ -92,7 +87,7 @@ int main()
     assert((q_test1.f == NULL) && (q_test1.r == NULL));
 
     printf("TEST ROTATION:...");
-    queue q_test2 = {NULL, NULL};
+    queue q_test2 = { NULL, NULL };
     int x_test2;
 
     q_test2 = enqueue(q_test2, 1);

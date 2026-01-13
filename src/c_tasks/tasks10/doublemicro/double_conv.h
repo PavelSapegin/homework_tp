@@ -1,13 +1,11 @@
-#pragma once 
+#pragma once
 
-typedef union Number
-{
+typedef union Number {
     double val;
     unsigned long long conv;
 } Number;
 
-typedef struct ParsedDouble
-{
+typedef struct ParsedDouble {
     char sign;
     int exp;
     double man;

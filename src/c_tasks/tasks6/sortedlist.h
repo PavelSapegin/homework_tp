@@ -2,19 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-typedef struct list
-{
+typedef struct list {
     int data;
-    struct list *next;
+    struct list* next;
 } list;
 
-
-
-void print(list ** start);
-void append(list **start, int new_val);
-void delete(list **start, int val);
+void print(list** start);
+void append(list** start, int new_val);
+void delete(list** start, int val);
 void menu();
-void free_list(list **start);
+void free_list(list** start);
 
 int run_tests();
