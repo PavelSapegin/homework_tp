@@ -8,8 +8,8 @@ int main()
     char s1[1000000];
 
     // Считываем строки
-    scanf("%[^\n]\n",s);
-    scanf("%[^\n]",s1);
+    scanf("%[^\n]\n", s);
+    scanf("%[^\n]", s1);
 
     // Для дальнейшей работы со строками
     // длины их строк присваиваем переменным
@@ -19,15 +19,12 @@ int main()
     int step = strlen(s1);
     int count = 0;
 
-
     // Перебираем все подстроки длинной строки s1
-    for (int start = 0; start + step <= lens1; ++start)
-    {
+    for (int start = 0; start + step <= lens1; ++start) {
         char sub[start + step];
 
         // собираем подстроку
-        for (int i = 0; i < step; ++i)
-        {
+        for (int i = 0; i < step; ++i) {
             sub[i] = s[start + i];
         }
 
@@ -40,7 +37,3 @@ int main()
     printf("%d\n", count);
     return 0;
 }
-
-
-
-
